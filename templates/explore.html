@@ -7,9 +7,11 @@
     <title>{{.Title}}</title>
     <script type="text/javascript" src="../js/autocomplete.js"></script>
     <script type="text/javascript" src="../js/fetchnames.js"></script>
+    <link href="//cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 </head>
 <body>
-
 <nav>
     <ul>
         <li><a href="https://www.patreon.com/ban_community"><img src="img/misc/patreon.png" width=48></a></li>
@@ -34,7 +36,9 @@
     {{else}}
         <h1>Welcome to BAN Explore</h1>
 
+        <!-- Usage for Select2 box on the site. -->
         <script type="text/javascript">
+<<<<<<< Updated upstream
             var sites = [];
             sites.push("/explore?site=1");
             sites.push("/explore?site=2");
@@ -48,19 +52,74 @@
                 link.target  = '_blank';
                 setTimeout(link.click(), 1000);
             }
+=======
+            $(document).ready(function() {
+                $('.selected-sellers').select2({
+                    width: 'resolve'
+                });
+                $('.available-sellers').select2({
+                    width: 'resolve'
+                });
+            });
+>>>>>>> Stashed changes
         </script>
+        {{if eq .SearchQuery ""}}
+            <div class="indent">
+            <h3>Search across a multitude of MTG stores</h3>
+                <form class="search autocomplete" autocomplete="off" id="searchform" onSubmit="javascript:sites.reverse().forEach(openWindow)">
+                    {{if ne .Signature ""}}
+                        <input type="hidden" name="sig" value="{{.Signature}}">
+                    {{end}}
+                    <input id="searchbox" class="w3-input w3-border w3-round-small search-input" onFocus="this.setSelectionRange(0, this.value.length)" type="text" name="q" placeholder="Enter a card name or anything really" value="{{.SearchQuery}}">
+                </form>
+            </div>
 
+<<<<<<< Updated upstream
         <div class="indent">
         <h3>Search across a multitude of MTG stores</h3>
             <form class="search autocomplete" autocomplete="off" id="searchform" onSubmit="javascript:sites.reverse().forEach(openWindow)">
                 <input id="searchbox" class="w3-input w3-border w3-round-small search-input" onFocus="this.setSelectionRange(0, this.value.length)" type="text" name="q" placeholder="Enter a card name or anything really" value="{{.SearchQuery}}">
             </form>
         </div>
+=======
+            <script type="text/javascript">
+                autocomplete(document.getElementById("searchform"), document.getElementById("searchbox"));
+            </script>
+>>>>>>> Stashed changes
 
-        <script type="text/javascript">
-            autocomplete(document.getElementById("searchform"), document.getElementById("searchbox"));
-        </script>
+            <div class="indent" style="max-width: 700px;">
+                <h2>Instructions</h2>
+                <br>
+                <ul class="indent">
+                    <li>This tool allows you to search for cards or sealed across a wide range of websites, by opening a bunch of tabs in the background from a single query.</li>
+                    <li>Contrary to the <a href="search?sig={{.Signature}}">Search tool</a>, you will get only retail results, but they will be live from the seller site. You may find some gems, especially after a card spiked!</li>
+                    <li>Works in <i>Firefox</i> out of the box, in <i>Chrome</i> it may need to get a special permission: follow the steps here <a href="https://support.google.com/chrome/answer/95472">Allow pop-ups from a site</a>, and enable popups for mtgban.com.<br>
+                        It does not work in <i>Safari</i>, and it is untested elsewhere.</li>
+                    <li>Note that this may be a very resource-intensive operation, and may crash your browser if you try to open too many tabs at once.</li>
+                </ul>
+            </div>
+        {{else}}
+            <div class="indent" style="top: 120px;">
+                <table style="float: left;">
+                    <tr>
+                        <td>
+                            <img id="cardImage" src="https://c1.scryfall.com/file/scryfall-card-backs/large/0a/0aeebaf5-8c7d-4636-9e82-8c27447861f7.jpg" width="354" height="493"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #f8f8f8;">
+                            {{if .HasReserved}}
+                                <h4>* = Part of the <a href="https://mtg.gamepedia.com/Reserved_List">Reserved List</a></h4>
+                            {{end}}
+                            {{if .HasStocks}}
+                                <h4>• = On <a href="https://mtgstocks.com/interests">MTGStocks Interests</a> page</h4>
+                            {{end}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
+<<<<<<< Updated upstream
         <div class="indent" style="max-width: 700px;">
             <h2>Instructions</h2>
             <br>
@@ -72,6 +131,91 @@
                 <li>Note that this may be a very resource-intensive operation, and may crash your browser if you try to open too many tabs at once.</li>
             </ul>
         </div>
+=======
+            <div class="indent">
+                <table class="searchResults">
+                    <tr>
+                        <th colspan="2" class=""><h2 align=center>Big Boys</h2></th>
+                    </tr>
+                    <tr>
+                        <th colspan="10" class="wrap" style="text-align: left; vertical-align: middle;">
+                            <select class="selected-sellers" name="states[]" multiple="multiple" style="width: 100%">
+                            {{range $bbSeller := .BBSellers}}
+                              {{if .IsDefault}}
+                                    <option value="{{.URI}}" selected="selected">{{.Name}}</option>
+                                {{else}}
+                                    <option value="{{.URI}}">{{.Name}}</option>
+                                {{end}}
+                            {{end}}
+                            </select>
+                        </th>
+                    </tr>
+                    <tr class="blank_row">
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="stickyCategory"><h2 align=center>USA</h2></th>
+                    </tr>
+                    <tr>
+                        <th colspan="10" class="wrap stickyHeader" style="text-align: left; vertical-align: middle;">
+                            <select class="available-sellers" name="states[]" multiple="multiple" style="width: 100%">
+                              {{range $bbSeller := .USASellers}}
+                                {{if .IsDefault}}
+                                    <option value="{{.URI}}" selected="selected">{{.Name}}</option>
+                                {{else}}
+                                    <option value="{{.URI}}">{{.Name}}</option>
+                                {{end}}
+                              {{end}}
+                            </select>
+                        </th>
+                    </tr>
+                </table>
+                <table class="searchResults">
+                    <tr>
+                        <th colspan="2" class="stickyCategory"><h2 align=center>Canada</h2></th>
+                    </tr>
+                    <tr>
+                        <th colspan="10" class="wrap stickyHeader" style="text-align: left; vertical-align: middle;">
+                            <select class="available-sellers" name="states[]" multiple="multiple" style="width: 100%">
+                              {{range $bbSeller := .CANSellers}}
+                                {{if .IsDefault}}
+                                    <option value="{{.URI}}" selected="selected">{{.Name}}</option>
+                                {{else}}
+                                    <option value="{{.URI}}">{{.Name}}</option>
+                                {{end}}
+                              {{end}}
+                            </select>
+                        </th>
+                    </tr>
+                    <tr class="blank_row">
+                        <td colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="stickyCategory"><h2 align=center>Japan</h2></th>
+                    </tr>
+                    <tr>
+                        <th colspan="10" class="wrap stickyHeader" style="text-align: left; vertical-align: middle;">
+                            <select class="available-sellers" name="states[]" multiple="multiple" style="width: 100%">
+                              {{range $bbSeller := .JPNSellers}}
+                                {{if .IsDefault}}
+                                    <option value="{{.URI}}" selected="selected">{{.Name}}</option>
+                                {{else}}
+                                    <option value="{{.URI}}">{{.Name}}</option>
+                                {{end}}
+                              {{end}}
+                            </select>
+                        </th>
+                    </tr>     
+                </table>
+            </div>
+            <script type="text/javascript">
+                console.log("{{.SearchQuery}}")
+                var card = fetchCard("{{.SearchQuery}}");
+                document.getElementById('cardImage').src = card.uri;
+            </script>
+        {{end}}
+        <div style="clear:both;"></div>
+>>>>>>> Stashed changes
     {{end}}
     <br>
 </div>

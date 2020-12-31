@@ -467,7 +467,11 @@ func sign(tierTitle string, sourceURL *url.URL, baseURL string) (string, string)
 		v.Set("Search", "true")
 		v.Set("Newspaper", "true")
 		v.Set("Sleepers", "true")
+<<<<<<< Updated upstream
 		v.Set("Global", "true")
+=======
+		v.Set("Explore", "true")
+>>>>>>> Stashed changes
 	case "Test Role":
 		v.Set("Search", "true")
 		v.Set("Newspaper", "true")
@@ -511,6 +515,8 @@ func sign(tierTitle string, sourceURL *url.URL, baseURL string) (string, string)
 	if v.Get("Explore") == "true" {
 		switch tierTitle {
 		case "Root":
+			v.Set("ExpEnabled", "ALL")
+		case "Bard":
 			v.Set("ExpEnabled", "ALL")
 		case "Admin":
 			v.Set("ExpEnabled", "FULL")

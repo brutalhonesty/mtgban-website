@@ -8,6 +8,7 @@
 async function autocomplete(form, inp) {
     var currentFocus;
     var minlen = 3;
+    console.log('autocomplete')
     const arr = await fetchNames();
 
     /* Execute a function when someone writes in the text field: */

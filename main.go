@@ -47,6 +47,13 @@ type GenericCard struct {
 	Stocks    bool
 }
 
+type Site = struct {
+	Name string `json:"name"`
+	URI string `json:"uri"`
+	SiteCategory string `json:"category"`
+	IsDefault bool `json:"default"`
+}
+
 type PageVars struct {
 	Nav []NavElem
 
@@ -102,7 +109,13 @@ type PageVars struct {
 	Sleepers [7]SleeperEntry
 
 	HasStocks bool
+	Sites []Site
+	BBSellers []Site
+	USASellers []Site
+	CANSellers []Site
+	JPNSellers []Site
 }
+
 
 var DefaultNav = []NavElem{
 	NavElem{

@@ -221,6 +221,18 @@ func Search(w http.ResponseWriter, r *http.Request) {
 	pageVars.FoundVendors = foundVendors
 	pageVars.SellerKeys = sortedKeysSeller
 	pageVars.VendorKeys = sortedKeysVendor
+	// log.Println("foundSellers")
+	// log.Println(foundSellers)
+	// log.Println("====================")
+	// log.Println("foundVendors")
+	// log.Println(foundVendors)
+	// log.Println("====================")
+	// log.Println("sortedKeysSeller")
+	// log.Println(sortedKeysSeller)
+	// log.Println("====================")
+	// log.Println("sortedKeysVendor")
+	// log.Println(sortedKeysVendor)
+	// log.Println("====================")
 
 	var source string
 	utm := r.FormValue("utm_source")

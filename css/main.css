@@ -77,6 +77,10 @@ table.searchResults {
     min-width:360px;
 }
 
+tr.blank_row {
+    height: 5rem !important; /* overwrites any other rules */
+}
+
 h1 {
     color: #17375e;
     margin-left: 20px;
